@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>iOS style calculator on Angular 1</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+    <style>
+        .container {
+            background: yellow;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: 2fr 1fr 1fr 1fr 1fr 1fr;
+            height: 70vh;
+            width: 25vw;
+            font-family: Roboto;
+            font-weight: 300;
+        }
+
+        .result {
+            display: flex;
+            align-items:flex-end;
+            justify-content: flex-end;
+            padding: 10px;
+            font-size: 3em;
+            background: #161616;
+            grid-column-start: 1;
+            grid-column-end: 5;
+            color: #fff;
+        }
+
+        .button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #C6C7CA;
+            border: 1px solid #666;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        .button:active {
+            opacity: 0.96;
+        }
+
+        .isGray {
+            background: #CDCDCF;
+        }
+
+        .isOrange {
+            background: #FF9000;
+        }
+
+        .zero {
+            grid-column-start: 1;
+            grid-column-end: 3;
+            justify-content: flex-start;
+            padding-left: 35px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="result" id="result">0</div>
+        <div class="button isGray" id="reset" onclick="calc(this);">AC</div>
+        <div class="button isGray" id="revertNumber" onclick="calc(this);">+/-</div>
+        <div class="button isGray" id="percent" onclick="calc(this);">%</div>
+        <div class="button isOrange" id="divide" onclick="calc(this);">/</div>
+        <div class="button" id="7" onclick="calc(this);">7</div>
+        <div class="button" id="8" onclick="calc(this);">8</div>
+        <div class="button" id="9" onclick="calc(this);">9</div>
+        <div class="button isOrange" id="multiply" onclick="calc(this);">X</div>
+        <div class="button" id="4" onclick="calc(this);">4</div>
+        <div class="button" id="5" onclick="calc(this);">5</div>
+        <div class="button" id="6" onclick="calc(this);">6</div>
+        <div class="button isOrange" id="substract" onclick="calc(this);">-</div>
+        <div class="button" id="1" onclick="calc(this);">1</div>
+        <div class="button" id="2" onclick="calc(this);">2</div>
+        <div class="button" id="3" onclick="calc(this);">3</div>
+        <div class="button isOrange" id="add" onclick="calc(this);">+</div>
+        <div class="button zero" id="0" onclick="calc(this);">0</div>
+        <div class="button" id="decimal" onclick="calc(this);">,</div>
+        <div class="button isOrange" id="equals" onclick="calc(this);">=</div>
+    </div>
+    <script type="text/javascript">
+
+        let screen = document.getElementById("result");
+
+        function calc(num) {
+            
+            let calcEvent = num.id;
+
+            switch (calcEvent) {
+                case "reset":
+                    screen.innerHTML = 0;
+                    break;
+
+                case "revertNumber":
+                    screen.innerHTML -= eval(screen.innerHTML * 2);
+                    break;
+
+                case "percent":
+                    screen.innerHTML = eval(screen.innerHTML / 100);
+                    break;
+
+                case "divide":
+                    screen.innerHTML = screen.innerHTML + "/";
+                    break;
+
+                case "multiply":
+                    screen.innerHTML = screen.innerHTML + "*";
+                    break;
+                 
+                case "substract":
+                    screen.innerHTML = screen.innerHTML + "-";
+                    break;
+                    
+                case "add":
+                    screen.innerHTML = screen.innerHTML + "+";
+                    break;
+                
+                case "decimal":
+                    screen.innerHTML = screen.innerHTML + ".";
+                    break;
+
+                case "0":
+                    if (screen.innerHTML != 0) {
+                        screen.innerHTML = screen.innerHTML + 0;
+                    }
+                    break;
+                case "1":
+                case "2":
+                case "3":
+                case "4":
+                case "5":
+                case "6":
+                case "7":
+                case "8":
+                case "9":
+                    if (screen.innerHTML != 0) {
+                        screen.innerHTML = screen.innerHTML + num.id;
+                    } else {
+                        screen.innerHTML = num.id;
+                    }
+                    break;
+                case "equals":
+                    screen.innerHTML = eval(screen.innerHTML);
+
+                    if (screen.innerHTML == "Infinity") {
+                        screen.innerHTML = "Error";
+                    } else if (screen.innerHTML == "NaN") {
+                        screen.innerHTML = "Error";
+                    }
+            }
+        }
+    </script>
+</body>
+</html>
