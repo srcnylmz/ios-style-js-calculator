@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>iOS style calculator </title>
+    <title>iOS style calculator</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
     <style>
         .container {
@@ -86,6 +86,8 @@
     <script type="text/javascript">
 
         let screen = document.getElementById("result");
+        let lastClicked = "";
+        let cursor = "";
 
         function calc(num) {
             
@@ -93,10 +95,14 @@
 
             switch (calcEvent) {
                 case "reset":
+                    lastclicked = "";
+                    cursor = "";
                     screen.innerHTML = 0;
                     break;
 
                 case "revertNumber":
+                    lastclicked = "";
+                    cursor = "";
                     screen.innerHTML -= eval(screen.innerHTML * 2);
                     break;
 
@@ -105,26 +111,78 @@
                     break;
 
                 case "divide":
-                    screen.innerHTML = screen.innerHTML + "/";
+                    if (lastClicked != "divide" && cursor != "symbol") {
+                      screen.innerHTML = screen.innerHTML + "/";
+                      lastClicked = "divide";
+                      cursor = "symbol";
+                    } else if (cursor == "symbol") {
+                      screen.innerHTML = screen.innerHTML.slice(0, -1) + "/";
+                      lastClicked = "divide";
+                      cursor = "symbol";
+                    } else {
+                      screen.innerHTML = screen.innerHTML + "/";
+                      lastClicked = "divide";
+                      cursor = "symbol";
+                    }
                     break;
 
                 case "multiply":
-                    screen.innerHTML = screen.innerHTML + "*";
+                    if (lastClicked != "multiply" && cursor != "symbol") {
+                      screen.innerHTML = screen.innerHTML + "*";
+                      lastClicked = "multiply";
+                      cursor = "symbol";
+                    } else if (cursor == "symbol") {
+                      screen.innerHTML = screen.innerHTML.slice(0, -1) + "*";
+                      lastClicked = "multiply";
+                      cursor = "symbol";
+                    } else {
+                      screen.innerHTML = screen.innerHTML + "*";
+                      lastClicked = "multiply";
+                      cursor = "symbol";
+                    }
                     break;
                  
                 case "substract":
-                    screen.innerHTML = screen.innerHTML + "-";
+                    if (lastClicked != "substract" && cursor != "symbol") {
+                      screen.innerHTML = screen.innerHTML + "-";
+                      lastClicked = "substract";
+                      cursor = "symbol";
+                    } else if (cursor == "symbol") {
+                      screen.innerHTML = screen.innerHTML.slice(0, -1) + "-";
+                      lastClicked = "substract";
+                      cursor = "symbol";
+                    } else {
+                      screen.innerHTML = screen.innerHTML + "-";
+                      lastClicked = "substract";
+                      cursor = "symbol";
+                    }
                     break;
                     
                 case "add":
-                    screen.innerHTML = screen.innerHTML + "+";
+                    if (lastClicked != "add" && cursor != "symbol") {
+                      screen.innerHTML = screen.innerHTML + "+";
+                      lastClicked = "add";
+                      cursor = "symbol";
+                    } else if (cursor == "symbol") {
+                      screen.innerHTML = screen.innerHTML.slice(0, -1) + "+";
+                      lastClicked = "add";
+                      cursor = "symbol";
+                    } else {
+                      screen.innerHTML = screen.innerHTML + "+";
+                      lastClicked = "add";
+                      cursor = "symbol";
+                    }
                     break;
                 
                 case "decimal":
+                    lastclicked = "";
+                    cursor = "";
                     screen.innerHTML = screen.innerHTML + ".";
                     break;
 
                 case "0":
+                    lastclicked = "";
+                    cursor = "";
                     if (screen.innerHTML != 0) {
                         screen.innerHTML = screen.innerHTML + 0;
                     }
@@ -138,7 +196,9 @@
                 case "7":
                 case "8":
                 case "9":
-                    if (screen.innerHTML != 0) {
+                    lastclicked = "";
+                    cursor = "";
+                    if (screen.innerHTML != 0 || screen.innerHTML == "0.") {
                         screen.innerHTML = screen.innerHTML + num.id;
                     } else {
                         screen.innerHTML = num.id;
